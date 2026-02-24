@@ -197,6 +197,13 @@ python scripts/calibrate_int8.py --model sdxl --calibration-data ./data/calibrat
 python finetune/train_lora.py --config finetune/configs/lora_default.yaml
 ```
 
+## Compliance & Legal Disclaimer
+
+1. **License**: This project is licensed under the Apache License 2.0.
+2. **Model Terms**: D-Gate is an inference server. Users must separately adhere to the license terms of the underlying models (e.g., SD-Turbo, SDXL).
+3. **Content Responsibility**: The author of D-Gate is NOT responsible for any content generated using this software. Users are fully responsible for the outputs and must ensure compliance with local safety laws and ethical guidelines.
+4. **No Warranty**: This software is provided "as is", optimized for RTX 3060; use on other hardware is at your own risk.
+
 ## License
 
 Apache 2.0 — see [LICENSE](LICENSE) for details.
