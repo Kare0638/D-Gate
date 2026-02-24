@@ -2,7 +2,7 @@
 
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.2+-ee4c2c.svg)](https://pytorch.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 **D-Gate** is a production-grade, latency-optimized diffusion model inference server supporting **multiple architectures** (UNet + DiT/Flux), **quantization** (INT8/FP8), **style transfer** (ControlNet, IP-Adapter), **video generation** (AnimateDiff, SVD), and **automated quality evaluation** (CLIP, FID, LPIPS). Built as the visual-generation companion to [V-Gate](https://github.com/Kare0638/V-Gate), it exposes OpenAI-compatible APIs while aggressively optimizing for memory-constrained GPUs and high-concurrency workloads.
 
@@ -199,4 +199,4 @@ python finetune/train_lora.py --config finetune/configs/lora_default.yaml
 
 ## License
 
-MIT
+Apache 2.0 — see [LICENSE](LICENSE) for details.
