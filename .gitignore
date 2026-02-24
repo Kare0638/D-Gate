@@ -1,0 +1,49 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Environment
+.env
+.env.local
+
+# Model artifacts
+*.engine
+*.plan
+*.safetensors
+*.onnx
+*.ckpt
+*.bin
+engines/
+models/
+
+# Benchmark results
+benchmark/results/
+
+# Evaluation data
+data/
+
+# Experiment tracking
+wandb/
+mlruns/
+outputs/
+
+# Monitoring data
+monitoring/grafana/data/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# TensorRT
+*.timing.cache

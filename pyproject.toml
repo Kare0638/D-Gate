@@ -1,0 +1,89 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dgate"
+version = "0.1.0"
+description = "High-throughput diffusion model inference server"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.12"
+authors = [
+    {name = "D-Gate Contributors"},
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "torch>=2.2.0",
+    "diffusers>=0.30.0",
+    "transformers>=4.44.0",
+    "accelerate>=0.33.0",
+    "safetensors>=0.4.0",
+    "pydantic>=2.8.0",
+    "pyyaml>=6.0",
+    "prometheus-client>=0.20.0",
+    "Pillow>=10.4.0",
+    "numpy>=1.26.0",
+]
+
+[project.optional-dependencies]
+tensorrt = [
+    "tensorrt>=10.0.0",
+    "onnx>=1.16.0",
+    "onnxruntime-gpu>=1.18.0",
+]
+quantization = [
+    "bitsandbytes>=0.43.0",
+    "optimum>=1.21.0",
+]
+evaluation = [
+    "torchmetrics>=1.4.0",
+    "pytorch-fid>=0.3.0",
+    "lpips>=0.1.4",
+    "clip-score>=0.1.0",
+]
+video = [
+    "imageio[ffmpeg]>=2.34.0",
+]
+finetune = [
+    "peft>=0.12.0",
+    "datasets>=2.20.0",
+    "bitsandbytes>=0.43.0",
+]
+tracking = [
+    "wandb>=0.17.0",
+]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.23.0",
+    "httpx>=0.27.0",
+    "ruff>=0.5.0",
+]
+all = [
+    "dgate[tensorrt,quantization,evaluation,video,finetune,tracking,dev]",
+]
+
+[project.scripts]
+dgate = "main:app"
+
+[tool.setuptools.packages.find]
+include = ["dgate*", "finetune*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]

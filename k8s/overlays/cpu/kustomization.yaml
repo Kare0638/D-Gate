@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+
+patches:
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: dgate
+      spec:
+        template:
+          spec:
+            containers:
+              - name: dgate
+                env:
+                  - name: DGATE_DRY_RUN
+                    value: "true"
+                resources:
+                  requests:
+                    memory: "2Gi"
+                    cpu: "1"
+                  limits:
+                    memory: "4Gi"
+                    cpu: "2"

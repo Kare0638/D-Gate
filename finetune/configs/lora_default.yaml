@@ -1,0 +1,31 @@
+model:
+  base: "stabilityai/stable-diffusion-xl-base-1.0"
+  dtype: "float16"
+
+lora:
+  rank: 16
+  alpha: 32
+  target_modules: ["to_q", "to_v", "to_k", "to_out.0"]
+  dropout: 0.05
+
+training:
+  learning_rate: 1.0e-4
+  num_epochs: 100
+  batch_size: 1
+  gradient_accumulation_steps: 4
+  max_train_steps: 1000
+  lr_scheduler: "cosine"
+  lr_warmup_steps: 100
+  seed: 42
+  mixed_precision: "fp16"
+
+dataset:
+  instance_prompt: "a photo of sks"
+  resolution: 1024
+  center_crop: true
+  random_flip: true
+
+output:
+  dir: "./output/lora/"
+  save_steps: 200
+  logging_dir: "./output/logs/"

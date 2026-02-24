@@ -1,0 +1,146 @@
+server:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 1
+  cors_origins: ["*"]
+  log_level: "info"
+
+auth:
+  enabled: false
+  api_keys: []  # List of valid API keys when enabled
+
+engine:
+  default_backend: "pytorch"  # pytorch | torch_compile | tensorrt
+  models:
+    sd15:
+      repo_id: "runwayml/stable-diffusion-v1-5"
+      dtype: "float16"
+      enabled: true
+    sdxl:
+      repo_id: "stabilityai/stable-diffusion-xl-base-1.0"
+      dtype: "float16"
+      enabled: true
+    flux:
+      repo_id: "black-forest-labs/FLUX.1-dev"
+      dtype: "float16"
+      architecture: "dit"
+      enabled: false
+  vae:
+    slicing: true
+    tiling: true
+    fp16: true
+  tensorrt:
+    engine_dir: "./engines/"
+    build_on_start: false
+    max_batch_size: 4
+    timing_cache: "./engines/timing.cache"
+  torch_compile:
+    mode: "reduce-overhead"
+    backend: "inductor"
+
+quantization:
+  enabled: false
+  precision: "int8"  # int8 | fp8
+  calibration:
+    dataset: "./data/calibration/"
+    num_samples: 512
+    batch_size: 4
+  output_dir: "./engines/quantized/"
+
+batching:
+  max_batch_size: 4
+  timeout_ms: 100
+  max_queue_size: 64
+
+generation:
+  default_steps: 30
+  default_guidance_scale: 7.5
+  default_width: 512
+  default_height: 512
+  max_width: 2048
+  max_height: 2048
+  scheduler: "euler_ancestral"  # euler | euler_ancestral | dpm++ | ddim
+
+lora:
+  directory: "./loras/"
+  max_cached: 5
+  default_scale: 0.8
+
+style:
+  controlnet:
+    models:
+      depth: "lllyasviel/control_v11f1p_sd15_depth"
+      canny: "lllyasviel/control_v11p_sd15_canny"
+      pose: "lllyasviel/control_v11p_sd15_openpose"
+    default_conditioning_scale: 0.8
+  ip_adapter:
+    model: "h94/IP-Adapter"
+    scale: 0.6
+  presets:
+    cinematic:
+      prompt_suffix: ", cinematic lighting, film grain, anamorphic"
+      guidance_scale: 8.0
+      steps: 40
+    anime:
+      prompt_suffix: ", anime style, cel shading, vibrant colors"
+      guidance_scale: 7.0
+      steps: 30
+    photorealistic:
+      prompt_suffix: ", photorealistic, 8k, ultra detailed"
+      guidance_scale: 9.0
+      steps: 50
+
+video:
+  animatediff:
+    motion_module: "guoyww/animatediff-motion-adapter-v1-5-3"
+    num_frames: 16
+    fps: 8
+  svd:
+    model: "stabilityai/stable-video-diffusion-img2vid-xt"
+    num_frames: 25
+    fps: 7
+    decode_chunk_size: 4
+  frame_interpolation:
+    enabled: true
+    method: "rife"
+    target_fps: 24
+
+evaluation:
+  reference_dir: "./data/reference/"
+  output_dir: "./benchmark/results/"
+  metrics:
+    clip:
+      model: "openai/clip-vit-large-patch14"
+      threshold: 0.28
+    fid:
+      num_samples: 1000
+    lpips:
+      net: "alex"  # alex | vgg
+
+experiment_tracking:
+  enabled: false
+  backend: "wandb"  # wandb | mlflow
+  wandb:
+    project: "dgate"
+    entity: null
+    tags: ["inference", "diffusion"]
+  mlflow:
+    tracking_uri: "http://localhost:5000"
+
+monitoring:
+  prometheus:
+    enabled: true
+    port: 9090
+  grafana:
+    enabled: true
+    port: 3000
+
+model_registry:
+  storage: "local"  # local | s3
+  local_path: "./models/"
+  s3:
+    bucket: "dgate-models"
+    region: "ap-southeast-2"
+    prefix: "registry/"
+  auto_load:
+    - "sdxl"

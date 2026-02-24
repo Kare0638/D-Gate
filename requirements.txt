@@ -1,0 +1,49 @@
+# Core
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+pydantic==2.10.4
+pyyaml==6.0.2
+
+# ML Runtime
+torch==2.2.2
+diffusers==0.31.0
+transformers==4.47.1
+accelerate==0.36.2
+safetensors==0.4.5
+
+# Image processing
+Pillow==10.4.0
+numpy==1.26.4
+
+# Metrics & monitoring
+prometheus-client==0.21.1
+
+# Quantization
+bitsandbytes==0.44.1
+optimum==1.23.3
+
+# Evaluation
+torchmetrics==1.6.0
+pytorch-fid==0.3.0
+lpips==0.1.4
+
+# Video
+imageio[ffmpeg]==2.36.1
+
+# Fine-tuning
+peft==0.14.0
+datasets==2.21.0
+
+# Experiment tracking
+wandb==0.18.7
+
+# TensorRT (optional, requires NVIDIA runtime)
+# tensorrt>=10.0.0
+# onnx>=1.16.0
+# onnxruntime-gpu>=1.18.0
+
+# Development
+pytest==8.3.4
+pytest-asyncio==0.24.0
+httpx==0.28.1
+ruff==0.8.4

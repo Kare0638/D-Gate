@@ -1,0 +1,30 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+  - hpa.yaml
+
+patches:
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: dgate
+      spec:
+        template:
+          spec:
+            nodeSelector:
+              node.kubernetes.io/instance-type: g5.xlarge
+            containers:
+              - name: dgate
+                resources:
+                  limits:
+                    nvidia.com/gpu: "1"
+                env:
+                  - name: AWS_DEFAULT_REGION
+                    value: "ap-southeast-2"
+            tolerations:
+              - key: nvidia.com/gpu
+                operator: Exists
+                effect: NoSchedule
